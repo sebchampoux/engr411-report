@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{amsmath}
 
 \begin{document}
 
@@ -27,11 +28,12 @@ I'm baby semiotics salvia literally +1 af coloring book woke banh mi gentrify or
 \clearpage
 
 \section{Introduction}
+[Talk about the fact that we are talking about image classification specifically.]
 
-\section{Convolutional Neural Networks}
+\section{Convolutional neural networks}
 Convolutional neural networks are a variation of multilayer perceptrons, a common class of neural networks. Therefore, it makes sense to start there.
 
-\subsection{Multilayer Perceptron}
+\subsection{Multilayer perceptron}
 \subsubsection{Structure}
 A classical concrete application of a neural network is the identification of handwritten digits. This application is commonly used as an example thanks to the existence of the MNIST Database (\textit{Modified National Institute of Standards and Technology database}), a database of 70,000 labelled pictures of handwritten digits freely available for machine learning \cite{lecun_mnist_1998}. To simplify the presentation of multilayer perceptrons below, this application will be used to illustrate how the different components of a neural network can work together to achieve this application.
 
@@ -41,24 +43,53 @@ Each neuron in the input layer represents a part of the total input provided to 
 
 The output layer represents the output of the neural network. As the perceptron performs recognition and classification, each neuron in the output layer is one of the possible "choices" of what could be represented in the image. For the digits example, the output layer would contain ten neurons, one for each digit. The intended output of the neural network is for all but one of the output neurons to have a low activation, and one neuron having a very high activation, the latter being the network's best guess of what digit is represented in the image.
 
-The hidden layers, in-between the input and output layers, serve to improve the performance of the neural network. These layers enable the network to recognize patterns within the image, therefore facilitating the recognition of complex forms. For instance, the digit "8" is made up of two small loops one over the other. In theory, the middle layers could try to recognize these shapes in the image to make a decision whether the digit represented is an eight. In practice, neural networks create their own patterns during the training process, which are often a far cry of what a human would consider logical \cite{sanderson_gradient_2017}.
+The hidden layers, in-between the input and output layers, serve to improve the performance of the neural network. These layers enable the network to recognize patterns within the image, therefore facilitating the recognition of complex forms. For instance, the digit "8" is made up of two small loops one over the other. In theory, the middle layers could attempt to recognize these shapes in the image to make a decision whether the digit represented is an eight. In practice, neural networks create their own patterns during the training process, which are often very abstract and a far cry of what a human would consider logical \cite{sanderson_gradient_2017}.
 
-In a standard multilayer perceptron, with the exception of neurons in the input layer, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron affects the activation of all the neurons connected to it ; in other words, the activation of a neuron is a function of the activation of the neurons that preceed it. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
+In a standard multilayer perceptron, with the exception of neurons in the input layer, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron affects the activation of every neuron connected to it ; in other words, the activation of a neuron is a function of the activation of the neurons that preceed it. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
 
-[MATH FORMULA]
+A bias can also be introduced into the equation. A bias can help to improve the results by requiring a very high, or very low, activation in parts of the input layer before activating neurons in the following layers.
 
-As demonstrated by the formula above, a neural network can be boiled down to fairly simple linear algebra. For this reason, neural networks are often computed by graphical processing units (GPU) instead of regular CPUs, as the formers are optimized for processing linear algebra \cite{salter_cart_2022}.
+All of these elements can be summarized into a vector-matrix multiplication. Below is the equation to compute the activation of the neurons in hidden layer 1, based on the activation of neurons from the input layer (layer 0). \(a_i^{(0)}\) represents the activation of neuron \(i\) from layer 0, \(w_{i,j}\) the weight of the connection between neuron \(i\) from the input layer and neuron \(j\) in layer 1, and \(b_i\) the bias applied to the weighted sum of the incoming connections from all of layer 0 to neuron \(i\) in layer 1. This output vector is processed through a function, usually the sigmoid function, to squish the results into the range \([0,1]\). This output neuron represents the activation of every neuron in layer 1. This process can then be repeated for the subsequent layers, using the activation vector of layer 1 as input.
+
+\begin{displaymath}
+	\sigma
+	\left(
+	\begin{bmatrix}
+		w_{0,0} & w_{0,1} & \cdots & w_{0,n}\\
+		w_{1,0} & w_{1,1} & \cdots & w_{1,n}\\
+		\vdots & \vdots & \ddots & \vdots\\
+		w_{m,0} & w_{m,1} & \cdots & w_{m,n}
+	\end{bmatrix}
+	\begin{bmatrix}
+		a_{0}^{(0)}\\
+		a_{1}^{(0)}\\
+		\vdots\\
+		a_{n}^{(0)}
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		b_{0}\\
+		b_{1}\\
+		\vdots\\
+		b_{n}
+	\end{bmatrix}
+	\right)
+\end{displaymath}
+
+As demonstrated above, a neural network boils down to fairly simple, albeit large, linear algebraic functions. For this reason, neural networks are often computed by graphical processing units (GPU) instead of regular CPUs, as the formers are optimized for processing vector-matrices computations \cite{salter_cart_2022}.
 
 \subsubsection{Deep learning and backpropagation}
-
+In order to train a neural network to recognize and classify items, it is necessary to have a training set on-hand. A training set is a set of contents (images, videos, audio clips or some other medium), each item of which is labelled with the expected classification. As discussed earlier, the MNIST database is a good example of a training set: it is a set of 70,000 images of hand-drawn digits, each image appropriately labelled with the represented digit \cite{lecun_mnist_1998}. Another example is the database created by Google's ReCAPTCHA service. This service helps to protect websites from bots by asking web users to identify objects within images. By doing so, human users of ReCAPTCHA are also, unknowingly, contributing to the elaboration of training sets for AI training \cite{maruzani_are_2021}.
 
 \subsection{Convolutions}
 
-\subsection{Using Image Convolutions in a Neural Network}
+\subsection{Using image convolutions in a neural network}
 
-\section{Image Analysis with Convolutional Neural Networks}
+\section{Image analysis with convolutional neural networks}
 
-\section{Favorable Characteristics of CNNs for Image Recognition}
+\subsection{Concrete applications of CNNs}
+
+\section{Favorable characteristics of CNNs for image recognition}
 
 \section{Conclusion}
 
