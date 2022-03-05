@@ -45,11 +45,11 @@ The output layer represents the output of the neural network. As the perceptron 
 
 The hidden layers, in-between the input and output layers, serve to improve the performance of the neural network. These layers enable the network to recognize patterns within the image, therefore facilitating the recognition of complex forms. For instance, the digit "8" is made up of two small loops one over the other. In theory, the middle layers could attempt to recognize these shapes in the image to make a decision whether the digit represented is an eight. In practice, neural networks create their own patterns during the training process, which are often very abstract and a far cry of what a human would consider logical \cite{sanderson_gradient_2017}.
 
-In a standard multilayer perceptron, with the exception of neurons in the input layer, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron affects the activation of every neuron connected to it ; in other words, the activation of a neuron is a function of the activation of the neurons that preceed it. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
+In a standard multilayer perceptron, with the exception of neurons in the input layer, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron affects the activation of every neuron connected to it ; in other words, with the exception of the input layer, neurons are functions of the activation of the neurons that preceed them. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
 
-A bias can also be introduced into the equation. A bias can help to improve the results by requiring a very high, or very low, activation in parts of the input layer before activating neurons in the following layers.
+A bias can also be introduced into the equation. The addition of a bias can help improve the results by requiring a very high, or very low, activation in parts of the input layer before activating some specific neurons in the following layers \cite{sanderson_but_2017}.
 
-All of these elements can be summarized into a vector-matrix multiplication. Below is the equation to compute the activation of the neurons in hidden layer 1, based on the activation of neurons from the input layer (layer 0). \(a_i^{(0)}\) represents the activation of neuron \(i\) from layer 0, \(w_{i,j}\) the weight of the connection between neuron \(i\) from the input layer and neuron \(j\) in layer 1, and \(b_i\) the bias applied to the weighted sum of the incoming connections from all of layer 0 to neuron \(i\) in layer 1. This output vector is processed through a function, usually the sigmoid function, to squish the results into the range \([0,1]\). This output neuron represents the activation of every neuron in layer 1. This process can then be repeated for the subsequent layers, using the activation vector of layer 1 as input.
+All of these elements can be summarized into a vector-matrix multiplication. Below is the equation to compute the activation of the neurons in hidden layer 1, based on the activation of neurons from the input layer (layer 0). \(a_i^{(0)}\) represents the activation of neuron \(i\) from layer 0, \(w_{i,j}\) the weight of the connection between neuron \(i\) from the input layer and neuron \(j\) in layer 1, and \(b_i\) the bias applied to the weighted sum of the incoming connections from all of layer 0 to neuron \(i\) in layer 1. This output vector is processed through a function, usually the sigmoid function, to squish the results into the range \([0,1]\). This output neuron represents the activation of every neuron in layer 1. This process can then be repeated for the subsequent layers, using the activation vector of layer 1 as input \cite{sanderson_but_2017}.
 
 \begin{displaymath}
 	\sigma
@@ -74,12 +74,29 @@ All of these elements can be summarized into a vector-matrix multiplication. Bel
 		b_{n}
 	\end{bmatrix}
 	\right)
+	=
+	\begin{bmatrix}
+		a_{0}^{(1)}\\
+		a_{1}^{(1)}\\
+		\vdots\\
+		a_{n}^{(1)}
+	\end{bmatrix}
 \end{displaymath}
 
 As demonstrated above, a neural network boils down to fairly simple, albeit large, linear algebraic functions. For this reason, neural networks are often computed by graphical processing units (GPU) instead of regular CPUs, as the formers are optimized for processing vector-matrices computations \cite{salter_cart_2022}.
 
-\subsubsection{Deep learning and backpropagation}
-In order to train a neural network to recognize and classify items, it is necessary to have a training set on-hand. A training set is a set of contents (images, videos, audio clips or some other medium), each item of which is labelled with the expected classification. As discussed earlier, the MNIST database is a good example of a training set: it is a set of 70,000 images of hand-drawn digits, each image appropriately labelled with the represented digit \cite{lecun_mnist_1998}. Another example is the database created by Google's ReCAPTCHA service. This service helps to protect websites from bots by asking web users to identify objects within images. By doing so, human users of ReCAPTCHA are also, unknowingly, contributing to the elaboration of training sets for AI training \cite{maruzani_are_2021}.
+\subsubsection{Deep learning, gradient descent and backpropagation}
+Once the structure of the neural network has been laid down, it must be tuned so that it can recognize and classify accurately what is presented to it. This tuning process consists of adjusting the hundreds of weights and biases in-between neurons, in order for a given input to trigger the appropriate activations in the output layer with an acceptable rate of accuracy. It goes without saying that this is too tedious and intricate to be performed by humans. Therefore, the neural network "trains itself" with the help of two algorithms, gradient descent and backpropagation. \cite{ibm_cloud_education_what_2020}.
+
+To train a neural network, it is necessary to have a training set on-hand. A training set is a set of contents (images, videos, audio clips or some other medium), each item of which is labelled with the expected classification. As discussed earlier, the MNIST database is a good example of a training set: it is a set of 70,000 images of hand-drawn digits, each image appropriately labelled with the represented digit \cite{lecun_mnist_1998}. Another example is the database created by Google's ReCAPTCHA service. This service helps to protect websites from bots by asking web users to identify objects within images. By doing so, human users of ReCAPTCHA are also, unknowingly, contributing to the elaboration of training sets for AI training \cite{maruzani_are_2021}.
+
+To begin the training process, the different weights and biases of the neural network are initialised with random values. The training set is then processed by the neural network. Unsurprisingly, the results will be very poor at this stage. The network then computes the cost of its errors by a cost function. This cost function sums the squared difference between the activation of a neuron in the output layer and the expected activation of this neuron (represented below as \(a_{i}^{(p)}\)) \cite{sanderson_gradient_2017}.
+
+\begin{displaymath}
+	\sum_{i=0}^{n} (a_{i}^{(o)} - a_{i}^{(p)})^{2}
+\end{displaymath}
+
+This cost function expresses how accurate the results given by the neural network are. The objective is for this cost function to be as close as possible to 0.
 
 \subsection{Convolutions}
 
