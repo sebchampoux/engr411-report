@@ -90,13 +90,24 @@ Once the structure of the neural network has been laid down, it must be tuned so
 
 To train a neural network, it is necessary to have a training set on-hand. A training set is a set of contents (images, videos, audio clips or some other medium), each item of which is labelled with the expected classification. As discussed earlier, the MNIST database is a good example of a training set: it is a set of 70,000 images of hand-drawn digits, each image appropriately labelled with the represented digit \cite{lecun_mnist_1998}. Another example is the database created by Google's ReCAPTCHA service. This service helps to protect websites from bots by asking web users to identify objects within images. By doing so, human users of ReCAPTCHA are also, unknowingly, contributing to the elaboration of training sets for AI training \cite{maruzani_are_2021}.
 
-To begin the training process, the different weights and biases of the neural network are initialised with random values. The training set is then processed by the neural network. Unsurprisingly, the results will be very poor at this stage. The network then computes the cost of its errors by a cost function. This cost function sums the squared difference between the activation of a neuron in the output layer and the expected activation of this neuron (represented below as \(a_{i}^{(p)}\)) \cite{sanderson_gradient_2017}.
+To begin the training process, the different weights and biases of the neural network are initialised with random values. The training set is then processed by the neural network. Unsurprisingly, the results will be very poor at this stage. The network computes the accuracy (or lack thereof) of its results with a cost function. This function receives, as input, the different weights and biases in the neural network, and returns a single real number, the cost of the network's errors. This cost is computed by averaging the error cost of each element in the training set. The latter, the error cost for a single example, is the sum of the squared difference between the actual activation of each neuron in the output layer with the expected activation of this neuron.
 
+Error cost of a single element in the training set:
 \begin{displaymath}
 	\sum_{i=0}^{n} (a_{i}^{(o)} - a_{i}^{(p)})^{2}
 \end{displaymath}
 
-This cost function expresses how accurate the results given by the neural network are. The objective is for this cost function to be as close as possible to 0.
+This cost function expresses how accurate the results given by the neural network are. The higher the error cost, the greater the difference between the expected and computed results and thus, the less accurate the network is. The objective is to adjust the weights and biases in the neural network to decrease this error cost as close as possible to 0 over the training set.
+
+To reduce this cost function, gradient descent will be used. Gradient descent is an optimization algorithm to find a local minimum of a function. It consists of computing the gradient of a function (noted \(\nabla C\) - a vector in the direction of the steepest increase), moving by a factor of the negative of this vector (\(-\nabla C\)), and repeating until a local minimum is reached \cite{sanderson_gradient_2017}.
+
+The algorithm to efficiently compute the gradient of a neural network is backpropagation. This algorithm computes the adjustments that should be made to every weight and bias in the neural network in order to minimize the error cost. For each element in the training set, the algorithm starts from the output layer, and compares the activation of the output layer's neurons over a given example of the training set, to the expected result for this training set. Then, it computes by how much each weight and bias between the output layer and its previous layer should be adjusted in order to get closer to the expected result. Connections (weights) that improve the results of the network (decrease the error cost) should be strenghtened, and conversely, connections that increase this error cost should be weakened. These adjustments should be proportional to how much each connection impacts the error cost. This algorithm is repeated recursively for each layer in the neural network, then the adjustments for each example in the training set are averaged to get an adjustment vector for the entire training set \cite{sanderson_gradient_2017}.
+
+[NOTATION in video 4]
+
+At this point, it should be noted that computing the error cost and gradient descent of a neural network over a training set of tens of thousands of examples is computationaly expensive. For this reason, a more performant technique, stochastic gradient descent, is commonly used. The algorithm is the same, but instead of computing the entire training set, the training set is subdivided into multiple smaller random subsets of training examples. Then, the gradient descent vector is computed for every subset of the training set, and these vectors are applied iteratively to gradually improve the results of the network \cite{sanderson_gradient_2017}.
+
+[FORMULA?]
 
 \subsection{Convolutions}
 
