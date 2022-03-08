@@ -1,10 +1,11 @@
-\documentclass[12pt,a4paper,titlepage]{article}
+\documentclass[12pt,a4paper,notitlepage]{article}
 \linespread{2.0}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
-\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{graphicx}
 
 \begin{document}
 
@@ -30,11 +31,10 @@ I'm baby semiotics salvia literally +1 af coloring book woke banh mi gentrify or
 \section{Introduction}
 [Talk about the fact that we are talking about image classification specifically.]
 
-\section{Convolutional neural networks}
+\section{Multilayer perceptron}\label{multilayer-perceptron}
 Convolutional neural networks are a variation of multilayer perceptrons, a common class of neural networks. Therefore, it makes sense to start there.
 
-\subsection{Multilayer perceptron}
-\subsubsection{Structure}
+\subsection{Structure}
 A classical concrete application of a neural network is the identification of handwritten digits. This application is commonly used as an example thanks to the existence of the MNIST Database (\textit{Modified National Institute of Standards and Technology database}), a database of 70,000 labelled pictures of handwritten digits freely available for machine learning \cite{lecun_mnist_1998}. To simplify the presentation of multilayer perceptrons below, this application will be used to illustrate how the different components of a neural network can work together to achieve this application.
 
 A multilayer perceptron is a class of neural network. As the name implies, it is made up of "neurons" that are connected together. A neuron is simply a real number in the range [0,1] that represents an activation; 0.0 meaning the neuron is not activated and 1.0 meaning the neuron is fully activated. The neurons are arranged in multiple layers, at least three: an input layer, an output layer, and at least one "hidden" layer, each one serving a different role.
@@ -85,7 +85,7 @@ All of these elements can be summarized into a vector-matrix multiplication. Bel
 
 As demonstrated above, a neural network boils down to fairly simple, albeit large, linear algebraic functions. For this reason, neural networks are often computed by graphical processing units (GPU) instead of regular CPUs, as the formers are optimized for processing vector-matrices computations \cite{salter_cart_2022}.
 
-\subsubsection{Deep learning, gradient descent and backpropagation}
+\subsection{Deep learning, gradient descent and backpropagation}
 Once the structure of the neural network has been laid down, it must be tuned so that it can recognize and classify accurately what is presented to it. This tuning process consists of adjusting the hundreds of weights and biases in-between neurons, in order for a given input to trigger the appropriate activations in the output layer with an acceptable rate of accuracy. It goes without saying that this is too tedious and intricate to be performed by humans. Therefore, the neural network "trains itself" with the help of two algorithms, gradient descent and backpropagation. \cite{ibm_cloud_education_what_2020}.
 
 To train a neural network, it is necessary to have a training set on-hand. A training set is a set of contents (images, videos, audio clips or some other medium), each item of which is labelled with the expected classification. As discussed earlier, the MNIST database is a good example of a training set: it is a set of 70,000 images of hand-drawn digits, each image appropriately labelled with the represented digit \cite{lecun_mnist_1998}. Another example is the database created by Google's ReCAPTCHA service. This service helps to protect websites from bots by asking web users to identify objects within images. By doing so, human users of ReCAPTCHA are also, unknowingly, contributing to the elaboration of training sets for AI training \cite{maruzani_are_2021}.
@@ -94,7 +94,7 @@ To begin the training process, the different weights and biases of the neural ne
 
 (Below: cost function of an entire neural network for one training example)
 \begin{displaymath}
-	C_{0} = \sum_{j=0}^{n_{L-1}} (a_{j}^{(L)} - y_{j}})^{2}
+	C_{0} = \sum_{j=0}^{n_{L-1}} (a_{j}^{(L)} - y_{j})^{2}
 \end{displaymath}
 
 (Below: weighted sum of the neurons in a layer)
@@ -151,11 +151,47 @@ At this point, it should be noted that computing the error cost and gradient des
 
 [FORMULA?]
 
-\subsection{Convolutions}
+\section{Convolutional neural networks}
+
+\subsection{Image convolutions}
+Image convolutions is a technique of image processing to create different renditions of images, such as blurring, sharpening, highlighting edges, etc. It consists of applying a kernel, i.e., a small matrix, over the image, by image convolutions. An image convolution consists of computing the weighted average of the values of each group of pixel of the same size as the kernel, according to the pixel weights defined in the kernel \cite{sanderson_convolutions_2020}.
+
+\begin{displaymath}
+	\begin{bmatrix}
+		1/9 & 1/9 & 1/9 \\
+		1/9 & 1/9 & 1/9 \\
+		1/9 & 1/9 & 1/9
+	\end{bmatrix}
+\end{displaymath}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{images/box-blur.jpg}
+	\caption{A group of beige and black pixels are averaged to a grey-beige by the box blur kernel \cite{sanderson_convolutions_2020}.}
+	\label{fig:box-blur}
+\end{figure}
+
+As a simple example, the kernel above would create a box blur effect. For each group of 9 pixels in the original image, the corresponding center pixel in the blurred image would be equal to an average of the 9 pixels, all with equal weights.
+
+Another example of a possible simple kernel is \(\begin{bsmallmatrix}-1 & -1 & -1 \\ 1 & 1 & 1 \\ 0 & 0 & 0\end{bsmallmatrix}\). This kernel would highlight top edges of objects in an image \cite{deep_lizard_convolutional_2017}.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics{images/edge-highlighting-kernel.png}
+	\caption{The rudimentary kernel above highlights the top edges of this handdrawn seven \cite{deep_lizard_convolutional_2017}.}
+	\label{fig:edge-highlighting-kernel}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.6\textwidth]{images/image-convolutions-examples.png}
+	\caption{Other examples of kernels and their application on a sample image \cite{noauthor_kernel_2022}}
+	\label{fig:image-convolutions-examples}
+\end{figure}
+
 
 \subsection{Using image convolutions in a neural network}
-
-\section{Image analysis with convolutional neural networks}
+As the name may suggest, a convolutional neural network is a multilayer perceptron, as seen in section \ref{multilayer-perceptron}, that uses image convolutions to extract information from images in order to facilitate their classification \cite{deep_lizard_convolutional_2017}.
 
 \subsection{Concrete applications of CNNs}
 
