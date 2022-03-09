@@ -39,13 +39,20 @@ A classical concrete application of a neural network is the identification of ha
 
 A multilayer perceptron is a class of neural network. As the name implies, it is made up of "neurons" that are connected together. A neuron is simply a real number in the range [0,1] that represents an activation; 0.0 meaning the neuron is not activated and 1.0 meaning the neuron is fully activated. The neurons are arranged in multiple layers, at least three: an input layer, an output layer, and at least one "hidden" layer, each one serving a different role.
 
-Each neuron in the input layer represents a part of the total input provided to the perceptron. For the digits example, the input is a black and white image of a handwritten digit, of format 28*28 pixels. Therefore, the input layer would constitute of 784 neurons, each representing a pixel of the image, and their respective activation being the brightness value of the pixel (0.0 being black, 1.0 being white, and grey shades in-between) \cite{sanderson_but_2017}.
+Each neuron in the input layer represents a part of the total input provided to the perceptron. For the digits example, the input is a black and white image of a handwritten digit, of format 28*28 pixels. Therefore, the input layer would constitute of 784 neurons, each corresponding to a pixel of the image, and their respective activation being the brightness value of their respective pixel (0.0 being black, 1.0 being white, and shades of grey in-between) \cite{sanderson_but_2017}.
 
 The output layer represents the output of the neural network. As the perceptron performs recognition and classification, each neuron in the output layer is one of the possible "choices" of what could be represented in the image. For the digits example, the output layer would contain ten neurons, one for each digit. The intended output of the neural network is for all but one of the output neurons to have a low activation, and one neuron having a very high activation, the latter being the network's best guess of what digit is represented in the image.
 
 The hidden layers, in-between the input and output layers, serve to improve the performance of the neural network. These layers enable the network to recognize patterns within the image, therefore facilitating the recognition of complex forms. For instance, the digit "8" is made up of two small loops one over the other. In theory, the middle layers could attempt to recognize these shapes in the image to make a decision whether the digit represented is an eight. In practice, neural networks create their own patterns during the training process, which are often very abstract and a far cry of what a human would consider logical \cite{sanderson_gradient_2017}.
 
-In a standard multilayer perceptron, with the exception of neurons in the input layer, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron affects the activation of every neuron connected to it ; in other words, with the exception of the input layer, neurons are functions of the activation of the neurons that preceed them. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
+In a standard multilayer perceptron, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron impacts the activation of every neuron connected to it ; in other words, with the exception of the input layer, neurons are functions of the activation of the neurons that preceed them. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.60\textwidth]{images/perceptron-visualisation.png}
+	\caption{Visualisation of a multilayer perceptron \cite{sanderson_gradient_2017}}
+	\label{fig:perceptron-visualisation}
+\end{figure}
 
 A bias can also be introduced into the equation. The addition of a bias can help improve the results by requiring a very high, or very low, activation in parts of the input layer before activating some specific neurons in the following layers \cite{sanderson_but_2017}.
 
@@ -184,7 +191,7 @@ Another example of a possible simple kernel is \(\begin{bsmallmatrix}-1 & -1 & -
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.6\textwidth]{images/image-convolutions-examples.png}
+		\includegraphics[width=0.8\textwidth]{images/image-convolutions-examples.png}
 	\caption{Other examples of kernels and their application on a sample image \cite{noauthor_kernel_2022}}
 	\label{fig:image-convolutions-examples}
 \end{figure}
