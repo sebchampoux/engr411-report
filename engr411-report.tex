@@ -201,9 +201,19 @@ Another example of a possible simple kernel is \(\begin{bsmallmatrix}-1 & -1 & -
 	\label{fig:image-convolutions-examples}
 \end{figure}
 
+A final issue that must be dealt with are the edges. As each kernel of n * n pixels render a single pixel in the image convolution, there will be a discrepancy between the original and convoluted image when the kernel is applied near the edges. Two techniques are used to deal with this situation: valid padding and solid padding. For the former, the image is padded with additional blank pixels beyond the edges, such that the convoluted image has the same dimensions as the original image. For the latter, the original image is not padded, and the kernel is applied up to the image's edges only. This results in a convoluted image that is a few pixels smaller than its original counterpart \cite{saha_comprehensive_2018}.
+
+[FIGURE]
 
 \subsection{Using image convolutions in a neural network}
-As the name may suggest, a convolutional neural network is a multilayer perceptron, as seen in section \ref{multilayer-perceptron}, that uses image convolutions to extract information from images in order to facilitate their classification \cite{deep_lizard_convolutional_2017}.
+A convolutional neural network is a neural network that features at least two additional layers: at least one convolutional layer, followed by at least one pooling layer. There can be as many of these two layers, in that order, as necessary. After being processed through these two steps, the image data is finally flattened and fed to a regular multilayer perceptron, as discussed in section \ref{multilayer-perceptron}.
+
+\subsubsection{Convolutional layer}
+
+
+\subsubsection{Pooling layer}
+
+[Soft-max classification?]
 
 \subsection{Concrete applications of CNNs}
 
