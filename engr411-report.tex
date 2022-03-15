@@ -164,6 +164,14 @@ It should be noted that computing the error cost and gradient descent of a neura
 [FORMULA?]
 
 \section{Convolutional neural networks}
+Convolutional neural networks are enhanced multilayer perceptrons that feature at least two additional, special purpose layers: a convolutional layer and a pooling layer. The image data is first processed through these two layers, and is subsequently flattened into an array to be fed to a regular perceptron for the purpose of classification, as discussed in section \ref{multilayer-perceptron} \cite{saha_comprehensive_2018}.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.70\textwidth]{images/convolutional-neural-network.jpeg}
+	\caption{Illustration of a convolutional neural network \cite{saha_comprehensive_2018}.}
+	\label{fig:convolutional-neural-network}
+\end{figure}
 
 \subsection{Image convolutions}
 Image convolutions is a technique of image processing to create different renditions of images, such as blurring, sharpening, highlighting edges, etc. It consists of applying a kernel, i.e., a small matrix, over the image, by image convolutions. An image convolution consists of computing the weighted average of the values of each group of pixel of the same size as the kernel, according to the pixel weights defined in the kernel \cite{sanderson_convolutions_2020}.
@@ -194,7 +202,7 @@ Another example of a possible simple kernel is \(\begin{bsmallmatrix}-1 & -1 & -
 	\label{fig:image-convolutions-examples}
 \end{figure}
 
-An issue that must be dealt with is the edges. As each kernel of n * n pixels render a single pixel in the image convolution, there will be a discrepancy between the original and convoluted image when the kernel is applied near the edges. Two techniques are used to deal with this situation: valid padding and solid padding. For the former, the image is padded with additional blank pixels beyond the edges, such that the convoluted image has the same dimensions as the original image. For the latter, the original image is not padded, and the kernel is applied up to the image's edges only. This results in a convoluted image that is a few pixels smaller than its original counterpart \cite{saha_comprehensive_2018}.
+An issue that must be dealt with is the edges. As each kernel of n * n pixels render a single pixel in the image convolution, there will be a discrepancy between the original and convoluted image when the kernel is applied near the edges. Two techniques are used to deal with this situation: \textbf{valid padding} and \textbf{solid padding}. For valid padding, the image is padded with additional blank pixels beyond the edges, such that the convoluted image has the same dimensions as the original image. For same padding, the original image is not padded, and the kernel is applied up to the image's edges only. This results in a convoluted image that is a few pixels smaller than its original \cite{sanderson_convolutions_2020}.
 
 \begin{figure}[htbp]
 	\centering
@@ -203,20 +211,30 @@ An issue that must be dealt with is the edges. As each kernel of n * n pixels re
 	\label{fig:padding-illustration}
 \end{figure}
 
-\subsection{Additional layers in convolutional neural network}
-Convolutional neural networks are enhanced multilayer perceptrons that feature at least two additional, special purpose layers: at least one convolutional layer, followed by at least one pooling layer. The image data is first processed through these two layers, and is subsequently flattened into an array to be fed to a regular perceptron, as discussed in section \ref{multilayer-perceptron}.
+\subsection{Convolutional layers}
+The convolutional layers apply image convolutions with different kernels to the input images in order to extract additional information from them. The objective of the convolution operation is to extract high-level features from the input image, such as edges or corners. If multiple convolutional layers are used, conventionaly, the additional layers will be responsible for detecting higher-level features, such as shapes or patterns. With enough layers, a convolutional neural network can acquire some very deep insight into the subject of the image \cite{saha_comprehensive_2018}.
 
-\subsubsection{Convolutional layer}
+[À adapter] In the case of images with multiple channels (e.g. RGB), the Kernel has the same depth as that of the input image. Matrix Multiplication is performed between Kn and In stack ([K1, I1]; [K2, I2]; [K3, I3]) and all the results are summed with the bias to give us a squashed one-depth channel Convoluted Feature Output.
 
+\subsection{Pooling layers}
+A pooling layer follows every convolutional layer. Pooling layers are responsible for reducing the spatial size of the convolved feature - in other words, reduce each kernel of n * n pixels to a single value. This reduction decreases the computational effort required to process the data, which greatly improves performance of CNNs. It is also useful for extracting dominant features from the image without consideration for their position or rotation, which makes the features detection more flexible.
 
-\subsubsection{Pooling layer}
+There are two types of pooling algorithms: \textbf{max pooling} and \textbf{average pooling}. Max pooling returns the maximum value from each kernel of n * n pixels. Average pooling returns the average of the \(n^2\) pixels' values within a kernel. Max pooling is generally preferred because, in addition to reducing the image's dimension, it also discards unusual, noisy activations from the data, whereas average pooling does not discard noise \cite{saha_comprehensive_2018}.
 
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.80\textwidth]{images/pooling.jpg}
+	\caption{Comparison of max and average pooling algorithms \cite{saha_comprehensive_2018}}
+	\label{fig:pooling}
+\end{figure}
+
+\subsection{Image classification}
 [Soft-max classification?]
 
 \subsection{Concrete applications of CNNs}
 
 \section{Favorable characteristics of CNNs for image recognition}
-
+The role of the convnet is to reduce the images into a form which is easier to process without losing features which are critical for getting a good prediction \cite{saha_comprehensive_2018}
 Keeps spatial data instead of flattening the image \cite{saha_comprehensive_2018}
 Not fully connected = lighter and more efficient than a regular multilayer perceptron
 Use of different filters = enables extraction of many kinds of data
