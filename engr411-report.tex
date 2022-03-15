@@ -189,15 +189,8 @@ Another example of a possible simple kernel is \(\begin{bsmallmatrix}-1 & -1 & -
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics{images/edge-highlighting-kernel.png}
-	\caption{The rudimentary kernel above highlights the top edges of this handdrawn seven \cite{deep_lizard_convolutional_2017}.}
-	\label{fig:edge-highlighting-kernel}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
 		\includegraphics[width=0.8\textwidth]{images/image-convolutions-examples.png}
-	\caption{Other examples of kernels and their application on a sample image \cite{wikipedia_collaborators_kernel_2022}}
+	\caption{Examples of kernels and their application on a sample image \cite{wikipedia_collaborators_kernel_2022}}
 	\label{fig:image-convolutions-examples}
 \end{figure}
 
@@ -210,8 +203,8 @@ An issue that must be dealt with is the edges. As each kernel of n * n pixels re
 	\label{fig:padding-illustration}
 \end{figure}
 
-\subsection{Using image convolutions in a neural network}
-A convolutional neural network is a neural network that features at least two additional layers: at least one convolutional layer, followed by at least one pooling layer. There can be as many of these two layers, in that order, as necessary. After being processed through these two steps, the image data is finally flattened and fed to a regular multilayer perceptron, as discussed in section \ref{multilayer-perceptron}.
+\subsection{Additional layers in convolutional neural network}
+Convolutional neural networks are enhanced multilayer perceptrons that feature at least two additional, special purpose layers: at least one convolutional layer, followed by at least one pooling layer. The image data is first processed through these two layers, and is subsequently flattened into an array to be fed to a regular perceptron, as discussed in section \ref{multilayer-perceptron}.
 
 \subsubsection{Convolutional layer}
 
