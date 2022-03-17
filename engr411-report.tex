@@ -211,6 +211,8 @@ An issue that must be dealt with is the edges. As each kernel of n * n pixels re
 	\label{fig:padding-illustration}
 \end{figure}
 
+[Devrait expliquer stride aussi] ==> https://machinelearningmastery.com/pooling-layers-for-convolutional-neural-networks/
+
 \subsection{Convolutional layers}
 The convolutional layers apply image convolutions with different kernels to the input images in order to extract additional information from them. The objective of the convolution operation is to extract high-level features from the input image, such as edges or corners. If multiple convolutional layers are used, conventionaly, the additional layers will be responsible for detecting higher-level features, such as shapes or patterns. With enough layers, a convolutional neural network can acquire some very deep insight into the subject of the image \cite{saha_comprehensive_2018}.
 
@@ -221,6 +223,8 @@ A pooling layer follows every convolutional layer. Pooling layers are responsibl
 
 There are two types of pooling algorithms: \textbf{max pooling} and \textbf{average pooling}. Max pooling returns the maximum value from each kernel of n * n pixels. Average pooling returns the average of the \(n^2\) pixels' values within a kernel. Max pooling is generally preferred because, in addition to reducing the image's dimension, it also discards unusual, noisy activations from the data, whereas average pooling does not discard noise \cite{saha_comprehensive_2018}.
 
+https://machinelearningmastery.com/pooling-layers-for-convolutional-neural-networks/ ==> Removes sensitity to positon of things in image, downsampling to just "presence or not" of feature
+
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[width=0.80\textwidth]{images/pooling.jpg}
@@ -230,6 +234,7 @@ There are two types of pooling algorithms: \textbf{max pooling} and \textbf{aver
 
 \subsection{Image classification}
 [Soft-max classification?]
+https://pyimagesearch.com/2016/09/12/softmax-classifiers-explained/ ==> Softmax = ce que le multilayer perceptron fait. Pourrait le mentionner dans la section plus haut, pas vraiment besoin ici.
 
 \subsection{Concrete applications of CNNs}
 
