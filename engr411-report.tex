@@ -18,7 +18,7 @@
 \maketitle
 
 \begin{abstract}
-I'm baby semiotics salvia literally +1 af coloring book woke banh mi gentrify organic wolf 8-bit tote bag chartreuse chicharrones. Helvetica cardigan next level art party kickstarter, vexillologist banh mi master cleanse actually street art tumeric poke whatever.
+Convolutional neural networks are a class of artificial neural networks that are commonly used to analyze digital imagery. This report will analyze and discuss the functioning of CNNs in the context of image classification.
 \end{abstract}
 \clearpage
 
@@ -32,7 +32,7 @@ I'm baby semiotics salvia literally +1 af coloring book woke banh mi gentrify or
 Neural networks are one amongst many forms of machine learning that were developed in the last decades. Convolutional neural networks are a specialized form of neural networks that are especially well suited for image analysis, such as identifying and classifying objects within images. The following report will discuss different aspects of convolutional neural networks  in the specific context of image classification: their structures, the deep learning process, image convolutions, pooling, and a discussion of favorable characteristics that make CNNs well-suited for image analysis.
 
 \section{Multilayer perceptron}\label{multilayer-perceptron}
-Convolutional neural networks are a variation of multilayer perceptrons, a common class of neural networks. Therefore, it makes sense to start there.
+Convolutional neural networks are a variation of multilayer perceptrons, a common class of neural networks. As multilayer perceptrons are more simple than CNNs, the structure and deep learning process will be discussed for this more simple form. The enhancements of CNNs over multilayer perceptrons will be discussed in section \ref{cnn-section}.
 
 \subsection{Structure}
 A classical concrete application of a neural network is the identification of handwritten digits. This application is commonly used as an example thanks to the existence of the MNIST Database (\textit{Modified National Institute of Standards and Technology database}), a database of 70,000 labelled pictures of handwritten digits freely available for machine learning \cite{lecun_mnist_1998}. To simplify the presentation of multilayer perceptrons below, this application will be used to illustrate how the different components of a neural network can work together to achieve this application.
@@ -209,7 +209,7 @@ An issue that must be dealt with is the edges. As each kernel of n * n pixels re
 	\label{fig:padding-illustration}
 \end{figure}
 
-\subsection{Convolutional layers}
+\subsection{Convolutional layers}\label{cnn-section}
 The convolutional layers apply image convolutions with different kernels to the input images in order to extract additional information from them. The objective of the convolution operation is to extract high-level features from the input image, such as edges or corners. If multiple convolutional layers are used, conventionaly, the additional layers will be responsible for detecting higher-level features, such as shapes or patterns. With enough layers, a convolutional neural network can acquire some very deep insight into the subject of the image \cite{saha_comprehensive_2018}.
 
 [À adapter] In the case of images with multiple channels (e.g. RGB), the Kernel has the same depth as that of the input image. Matrix Multiplication is performed between Kn and In stack ([K1, I1]; [K2, I2]; [K3, I3]) and all the results are summed with the bias to give us a squashed one-depth channel Convoluted Feature Output.
@@ -249,6 +249,7 @@ The use of multiple kernels in the convolutional layers improves the image analy
 Finally, although the use of CNNs was only discussed in the context of image classification in this paper, the possibilities of CNNs go way beyond that. CNNs can detect multiple different objects within an image and identify their bounds to pixel precision, which could be very useful in photo editing for example [SOURCE].
 
 \section{Conclusion}
+Convolutional neural networks are a class of neural networks commonly used to analyze digital imagery. They are made up of layers of "neurons" that are connected together through weighted connections, that can be straightened or weakened in order for the network to accurately identify an image's subject. Neural networks are adjusted through deep learning, a process of tweaking the strength of connections between neurons by processing a training set and adjusting connections to improve the accuracy of the network over said training set. CNNs also include convolutional layers, that aid in the detection of image features, and pooling layers, to remove variance and improve performance. This report discussed the use of CNNs in the context of image analysis, but more advanced applications, such as object identification, are also possible.
 
 \clearpage
 \begin{flushleft}
