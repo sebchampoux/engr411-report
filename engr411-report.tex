@@ -237,16 +237,16 @@ Unlike convolutional layers, pooling layers are not machine-learned. They are al
 \subsection{Image classification}
 After processing the image through the convolutional and pooling layers, the remaining data is flattened into an array of numbers. This array is fed into a multilayer perceptron, as discussed in section \ref{multilayer-perceptron}. The classification is done via the soft-max classification algorithm, which is the technique described previously of the neural network giving its best "guess" of the image's subject through the activation of the output layer's neurons \cite{rosebrock_softmax_2016}.
 
-\subsection{Concrete applications of CNNs}
-
 \section{Favorable characteristics of CNNs for image recognition}
-Convolutional neural networks are only one amongst many forms and structures of artificial intelligence and machine learning. They are frequently used to analyse visual imagery because they have several favorable characteristics that make them suitable for this purpose.
+Convolutional neural networks are one amongst many forms and structures of artificial intelligence and machine learning. They are frequently used to analyze visual imagery because they have several favorable characteristics that make them suitable for this purpose.
 
-The role of the convnet is to reduce the images into a form which is easier to process without losing features which are critical for getting a good prediction \cite{saha_comprehensive_2018}
-Keeps spatial data instead of flattening the image \cite{saha_comprehensive_2018}
-Not fully connected = lighter and more efficient than a regular multilayer perceptron
-Use of different filters = enables extraction of many kinds of data
-More possibilities (for ex not just classification. Identification also possible)
+First, the use of convolutional layers preserves the spatial data within the image. This is useful because in an image, a pixel should be analyzed in relation to a few of its neighboring pixels. These relationships would be lost if the pixel data was immediately flattened, and the neural network would be needlessly heavy if every pixel was analyzed in relation to every other pixel in the image. Therefore, the convolutional and pooling layers reduce the images to a form that is easier to analyze without losing features that are critical for a good understanding of the image \cite{saha_comprehensive_2018}.
+
+Furthermore, since every pixel is analysed only in relation to a few of its neighboring pixels (within the range of a kernel), the first layers of a CNN do not need to be fully connected. This is much lighter than a fully connected neural network, which improves performance. [SOURCE]
+
+The use of multiple kernels in the convolutional layers improves the image analysis by enabling the detection of a large variety of details. Large scale details such as edges or corners, and lower-scale details such as loops, can all be detected and fed into the algorithm to improve the accuracy of the image classification [SOURCE].
+
+Finally, although the use of CNNs was only discussed in the context of image classification in this paper, the possibilities of CNNs go way beyond that. CNNs can detect multiple different objects within an image and identify their bounds to pixel precision, which could be very useful in photo editing for example [SOURCE].
 
 \section{Conclusion}
 
