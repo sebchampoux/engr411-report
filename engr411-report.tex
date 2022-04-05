@@ -10,15 +10,16 @@
 \begin{document}
 
 \title{Technical Report on Convolutional Neural Networks}
-\author{Sebastien Champoux
-\\ 40133449
-\\ Concordia University
+\author{Sebastien Champoux 40133449
 \\ ENGR 411 Technical Report
+\\ Concordia University - Department of Computer Science
+\\ Winter 2022
+\\ Presented to Professor Nematollaah Shiri
 }
 \maketitle
 
 \begin{abstract}
-Convolutional neural networks are a class of artificial neural networks that are commonly used to analyze digital imagery. This report will analyze and discuss the functioning of CNNs in the context of image classification.
+Convolutional neural networks are a class of artificial neural networks that are commonly used to analyze digital imagery. This report will discuss the functioning of CNNs in the context of image classification.
 \end{abstract}
 \clearpage
 
@@ -31,7 +32,7 @@ Convolutional neural networks are a class of artificial neural networks that are
 \section{Introduction}
 Neural networks are one amongst many forms of machine learning that were developed in the last decades. Convolutional neural networks are a specialized form of neural networks that are especially well suited for image analysis, such as identifying and classifying objects within images. The following report will discuss different aspects of convolutional neural networks  in the specific context of image classification: their structures, the deep learning process, image convolutions, pooling, and a discussion of favorable characteristics that make CNNs well-suited for image analysis.
 
-\section{Multilayer perceptron}\label{multilayer-perceptron}
+\section{Fully-connected neural networks}\label{fully-connected-networks}
 Convolutional neural networks are a variation of multilayer perceptrons, a common class of neural networks. As multilayer perceptrons are more simple than CNNs, the structure and deep learning process will be discussed for this more simple form. The enhancements of CNNs over multilayer perceptrons will be discussed in section \ref{cnn-section}.
 
 \subsection{Structure}
@@ -162,7 +163,7 @@ The result is the gradient descent vector. Each component of this vector represe
 Computing the error cost and gradient descent of a neural network over a training set of tens of thousands of examples is computationally expensive. For this reason, a more performant technique, stochastic gradient descent, is commonly used. The algorithm is the same, but instead of computing the entire training set, the training set is subdivided into multiple smaller random subsets of training examples. Then, the gradient descent vector is computed for every subset of the training set, and these vectors are applied iteratively to gradually improve the results of the network \cite{sanderson_gradient_2017}.
 
 \section{Convolutional neural networks}
-Convolutional neural networks are enhanced multilayer perceptrons that feature at least two additional, special purpose layers: a convolutional layer and a pooling layer. The image data is first processed through these two layers, and is subsequently flattened into an array to be fed to a regular perceptron for the purpose of classification, as discussed in section \ref{multilayer-perceptron} \cite{saha_comprehensive_2018}.
+Convolutional neural networks are enhanced multilayer perceptrons that feature at least two additional, special purpose layers: a convolutional layer and a pooling layer. The image data is first processed through these two layers, and is subsequently flattened into an array to be fed to a regular perceptron for the purpose of classification, as discussed in section \ref{fully-connected-networks} \cite{saha_comprehensive_2018}.
 
 \begin{figure}[htbp]
 	\centering
@@ -235,7 +236,7 @@ Unlike convolutional layers, pooling layers are not machine-learned. They are al
 \end{figure}
 
 \subsection{Image classification}
-After processing the image through the convolutional and pooling layers, the remaining data is flattened into an array of numbers. This array is fed into a multilayer perceptron, as discussed in section \ref{multilayer-perceptron}. The classification is done via the soft-max classification algorithm, which is the technique described previously of the neural network giving its best "guess" of the image's subject through the activation of the output layer's neurons \cite{rosebrock_softmax_2016}.
+After processing the image through the convolutional and pooling layers, the remaining data is flattened into an array of numbers. This array is fed into a multilayer perceptron, as discussed in section \ref{fully-connected-networks}. The classification is done via the soft-max classification algorithm, which is the technique described previously of the neural network giving its best "guess" of the image's subject through the activation of the output layer's neurons \cite{rosebrock_softmax_2016}.
 
 \section{Favorable characteristics of CNNs for image recognition}
 Convolutional neural networks are one amongst many forms and structures of artificial intelligence and machine learning. They are frequently used to analyze visual imagery because they have several favorable characteristics that make them suitable for this purpose.
