@@ -202,7 +202,7 @@ Another example of a possible simple kernel is \(\begin{bsmallmatrix}-1 & -1 & -
 	\label{fig:image-convolutions-examples}
 \end{figure}
 
-An issue that must be dealt with is the edges. As each kernel of n * n pixels render a single pixel in the image convolution, there will be a discrepancy between the original and convoluted image when the kernel is applied near the edges. Two techniques are used to deal with this situation: \textbf{valid padding} and \textbf{solid padding}. For valid padding, the image is padded with additional blank pixels beyond the edges, such that the convoluted image has the same dimensions as the original image. For same padding, the original image is not padded, and the kernel is applied up to the image's edges only. This results in a convoluted image that is a few pixels smaller than its original \cite{sanderson_convolutions_2020}.
+An issue arises when the kernel is applied to pixels close to the edges. As each kernel of n * n pixels renders a single pixel in the image convolution, there will be a discrepancy between the original and convoluted image when the kernel is applied near the edges. Two techniques are used to deal with this situation: \textbf{valid padding} and \textbf{solid padding}. For valid padding, the original image is padded with additional blank pixels beyond the edges, such that the convoluted image has the same dimensions as the original image. For same padding, the original image is not padded, and the kernel is applied up to the image's edges only. This results in a convoluted image that is a few pixels smaller than its original \cite{sanderson_convolutions_2020}.
 
 \begin{figure}[htbp]
 	\centering
@@ -239,7 +239,7 @@ Unlike convolutional layers, pooling layers are not machine-learned. They are al
 \subsection{Image classification}
 After processing the image through the convolutional and pooling layers, the remaining data is flattened into an array of numbers. This array is fed into a multilayer perceptron, as discussed in section \ref{fully-connected-networks}. The classification is done via the soft-max classification algorithm, which is the technique described previously of the neural network giving its best "guess" of the image's subject through the activation of the output layer's neurons \cite{rosebrock_softmax_2016}.
 
-\section{Favorable characteristics of CNNs for image recognition}
+\section{Favorable characteristics of CNNs for image classification}
 Convolutional neural networks are one amongst many forms and structures of artificial intelligence and machine learning. They are frequently used to analyze visual imagery because they have several favorable characteristics that make them suitable for this purpose.
 
 First, the use of convolutional layers preserves the spatial data within the image. This is useful because in an image, a pixel should be analyzed in relation to a few of its neighboring pixels. These relationships would be lost if the pixel data was immediately flattened, and the neural network would be needlessly heavy if every pixel was analyzed in relation to every other pixel in the image. Therefore, the convolutional and pooling layers reduce the images to a form that is easier to analyze without losing features that are critical for a good understanding of the image \cite{saha_comprehensive_2018}.
