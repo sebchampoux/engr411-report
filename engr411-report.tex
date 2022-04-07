@@ -44,9 +44,9 @@ The neurons in the input layer represent a part of the total input provided to t
 
 The output layer represents the output of the neural network. As the perceptron performs recognition and classification, each neuron in the output layer is one of the possible "choices" of what could be represented in the image. For the digits example, the output layer would contain ten neurons, one for each digit. The intended output of the neural network is for all but one of the output neurons to have a low activation, and one neuron having a very high activation, the latter being the network's best guess of what digit is represented in the image.
 
-The hidden layers, in-between the input and output layers, serve to improve the performance of the neural network. These layers enable the network to recognize patterns within the image, therefore facilitating the recognition of complex forms. For instance, the digit "8" is made up of two small loops one over the other. In theory, the middle layers could attempt to recognize these shapes in the image to make a decision whether the digit represented is an eight. In practice, neural networks create their own patterns during the training process, which are often very abstract and a far cry of what a human would consider logical \cite{sanderson_gradient_2017}.
+The hidden layers, in-between the input and output layers, serve to improve the performance of the neural network. These layers enable the network to recognize patterns within the image, therefore facilitating the recognition of complex forms. For instance, the digit "8" is made up of two small loops one over the other. In theory, the middle layers could attempt to recognize these shapes in the image to make a decision whether the digit represented is an eight. In practice, neural networks create their own patterns during the training process, which are often very abstract and a far cry from what a human would consider logical \cite{sanderson_gradient_2017}.
 
-In a standard multilayer perceptron, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron impacts the activation of every neuron connected to it. In other words, with the exception of the input layer, neurons are functions of the activation of the neurons that preceed them. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
+In a standard multilayer perceptron, every neuron from a layer is connected to every neuron from the previous layer. The activation of a neuron impacts the activation of every neuron connected to it in the following layer. In other words, with the exception of the input layer, every neuron is a function of the activation of the neurons that preceed it. The connection in-between two layers can be weighted, to increase or decrease how much the activation of a neuron impacts the connection of another neuron.
 
 \begin{figure}[htbp]
 	\centering
@@ -55,9 +55,9 @@ In a standard multilayer perceptron, every neuron from a layer is connected to e
 	\label{fig:perceptron-visualisation}
 \end{figure}
 
-A bias can also be introduced into the equation. The addition of a bias can help improve the results by requiring a very high, or very low, activation in parts of the input to activate some neurons in the following layers \cite{sanderson_but_2017}.
+A bias can also be introduced to further adjust the connection between neurons. The addition of a bias can help improve the results by requiring a very high, or very low, activation from the input to activate some neurons in the following layers \cite{sanderson_but_2017}.
 
-All of these elements can be summarized into a vector-matrix multiplication. Below is the equation to compute the activation of the neurons in hidden layer 1, based on the activation of neurons from the input layer (layer 0). \(a_i^{(0)}\) represents the activation of neuron \(i\) from layer 0, \(w_{i,j}\) the weight of the connection between neuron \(i\) from the input layer and neuron \(j\) in layer 1, and \(b_i\) the bias applied to the weighted sum of the incoming connections from all of layer 0 to neuron \(i\) in layer 1. This output vector is processed through a function, usually the sigmoid function, to squish the results into the range \([0,1]\). This output neuron represents the activation of every neuron in layer 1. This process can then be repeated for the subsequent layers, using the activation vector of layer 1 as input \cite{sanderson_but_2017}.
+All of these elements can be summarized into a vector-matrix multiplication. Below is the equation to compute the activation of the neurons in hidden layer 1, based on the activation of neurons from the input layer (layer 0). \(a_i^{(0)}\) represents the activation of neuron \(i\) from layer 0. \(w_{i,j}\), the weight of the connection between neuron \(i\) from the input layer and neuron \(j\) in layer 1. \(b_i\), the bias applied to the weighted sum of the incoming connections from all of layer 0 to neuron \(i\) in layer 1. This output vector is processed through the sigmoid function, to squish the computed activations into the range \([0,1]\). The output vector represents the activation of every neuron in layer 1. This process can then be repeated for the subsequent layers, using the activation vector of layer 1 as input \cite{sanderson_but_2017}.
 
 \begin{displaymath}
 	\sigma
@@ -91,11 +91,11 @@ All of these elements can be summarized into a vector-matrix multiplication. Bel
 	\end{bmatrix}
 \end{displaymath}
 
-As demonstrated above, a neural network boils down to a linear algebraic function. For this reason, neural networks are often computed by graphical processing units (GPUs) instead of regular CPUs, as they are optimized for processing vector-matrices computations \cite{salter_cart_2021}.
+As demonstrated above, a neural network boils down to a linear algebraic function. For this reason, neural networks are often computed by graphical processing units (GPUs) instead of regular CPUs, as GPUs are optimized for processing vector-matrices computations \cite{salter_cart_2021}.
 
 \subsection{Deep learning, gradient descent and backpropagation}\label{deep-learning}
 \subsubsection{Description of the process}
-Once the structure of the neural network has been laid down, it must be tuned so that it can recognize and classify accurately what is presented to it. This tuning process consists of adjusting the hundreds of weights and biases that connect the neurons, such that the neural network returns acceptable results over a large training set. Given the numerous weights and biases, this is too tedious and intricate to be performed by humans. Therefore, the neural network "trains itself" with the help of two algorithms, gradient descent and backpropagation. \cite{ibm_cloud_education_what_2020}.
+Once the structure of the neural network has been laid down, it must be fine-tuned to recognize and classify accurately what is presented to it. This tuning process consists of adjusting the hundreds of weights and biases that connect the neurons, such that the neural network returns acceptable results over a large training set. Given the numerous weights and biases, this is too tedious and intricate to be performed by humans. Therefore, the neural network "trains itself" with the help of two algorithms, gradient descent and backpropagation. \cite{ibm_cloud_education_what_2020}.
 
 To train a neural network, it is necessary to have a training set on-hand. A training set is a set of content (images, videos, audio clips or some other medium), in which each item is labelled with the expected classification. As discussed earlier, the MNIST database is a good example of a training set: it is a set of 70,000 images of hand-drawn digits, each image appropriately labelled with the represented digit \cite{lecun_mnist_1998}. Another example is the database created by Google's ReCAPTCHA service. This service helps to protect websites from bots by asking users to identify objects within images. By doing so, human users of ReCAPTCHA are also, unknowingly, contributing to the elaboration of training sets for AI training \cite{maruzani_are_2021}.
 
@@ -103,48 +103,43 @@ To begin the training process, the different weights and biases of the neural ne
 
 Below is the cost function of the neural network for one element of the training set. It is the sum of the squared difference between the activation of each neuron in the output layer (\(a_{j}^{(L)}\)) and their expected activation (\(y_{j}^{(L)}\)).
 \begin{displaymath}
-	C_{0} = \sum_{j=0}^{n_{L} - 1} (a_{j}^{(L)} - y_{j})^{2}
+	C_{0}(w_{1,1}, w_{1,2}, ..., w_{i,j}, b_{1}, ... ,b_{j}) = \sum_{j=0}^{n_{L} - 1} (a_{j}^{(L)} - y_{j})^{2}
 \end{displaymath}
 This cost function expresses how accurate the results given by the neural network are. The higher the error cost, the greater the difference between the expected and computed results and thus, the less accurate the network. The objective is to adjust the weights and biases in the neural network to decrease this error cost as close as possible to 0 for the training set.
 
-To reduce this cost function, gradient descent will be used. Gradient descent is an optimization algorithm to find a local minimum of a function. It consists of computing the gradient of the cost function (noted \(\nabla C\) - a vector in the direction of the steepest increase for each weight and bias of the network), adjusting the weights and biases by a factor of the negative of this vector (\(-\nabla C\)), and repeating these steps until a local minimum is reached \cite{sanderson_gradient_2017}.
+To reduce this cost function, gradient descent will be used. Gradient descent is an optimization algorithm to find a local minimum of a function. The algorithm consists of computing the gradient of the cost function (noted \(\nabla C\) - a vector in the direction of the steepest increase for each weight and bias of the network), adjusting the weights and biases by a factor of \(-\nabla C\), and repeating these steps until a local minimum is reached \cite{sanderson_gradient_2017}.
 
-The algorithm to efficiently compute the gradient of a neural network is backpropagation. This algorithm computes the gradient vector that is used to minimize the error cost. For each element in the training set, the algorithm starts from the output layer, and compares the activation of the output layer's neurons to the expected result. Then, it computes by how much each weight and bias that connect the output layer to its previous layer should be adjusted in order to minimize the error cost (in other words, decrease the difference between the output neurons' actual and expected activation). Connections (weights) that improve the accuracy of the results should be strengthened, and inversely, connections that worsens the results should see their weight diminished. Furthermore, these adjustments should be proportional to how much each connection impacts the error cost. This procedure is repeated recursively for each layer, from the output to the input layer. Finally, the adjustments computed for each example in the training set are averaged to get an adjustment vector for the entire training set. This algorithm is repeated multiple times until an acceptable accuracy is reached \cite{sanderson_gradient_2017}.
+The algorithm to efficiently compute the gradient of a neural network is backpropagation. This algorithm computes the gradient vector that is used to minimize the error cost. For each element in the training set, the algorithm starts from the output layer, and compares the activation of the output layer's neurons to the expected activations. Then, it computes by how much each weight and bias that connect the output layer neurons to the previous layer's neurons should be adjusted in order to minimize the error cost (in other words, decrease the difference between the output neurons' actual and expected activation). Connections (weights) that improve the accuracy of the results should be strengthened, and inversely, connections that worsen the results should see their weight diminished. Furthermore, these adjustments should be proportional to how much each connection impacts the error cost. This procedure is repeated recursively for each layer, from the output to the input layer. Finally, the adjustments computed for each example in the training set are averaged to get an adjustment vector for the entire training set. This algorithm is repeated multiple times until an acceptable accuracy is reached \cite{sanderson_gradient_2017}.
 
-Computing the error cost and gradient descent of a neural network over a training set of tens of thousands of examples is computationally expensive. For this reason, a more performant technique, stochastic gradient descent, is commonly used. The algorithm is the same, but instead of computing the entire training set, the training set is subdivided into multiple smaller random subsets of training examples. Then, the gradient descent vector is computed for every subset of the training set, and these vectors are applied iteratively to gradually improve the results of the network \cite{sanderson_gradient_2017}.
-
+Computing the error cost and gradient descent of a neural network over a training set of tens of thousands of examples is computationally expensive. For this reason, a more performant technique, stochastic gradient descent, is commonly used. The algorithm is the same, but instead of computing the gradient vector for the entire training set, the training set is subdivided into multiple smaller random subsets of training examples. Then, the gradient descent vector is computed for every subset of the training set, and these vectors are applied iteratively to gradually improve the results of the network \cite{sanderson_gradient_2017}.
 
 \subsubsection{Calculus of deep learning}
 The process described above is achieved by the use of derivatives and the chain rule of calculus.
 
-The equation below is the weighted sum of the activation of the neurons of the previous layer, plus a bias. In other words, it is the activation of a neuron that has not yet been processed through the sigmoid function. Note that this weighted sum is represented as \(z_j^{(L)}\) to differentiate it from the activation of a neuron (represented as \(a_j^{(L)}\) in the second equation below). This equation is presented here separately from the activation function because it will be used to compute the cost function's gradient.
+As a notational reminder, the equation below is the weighted sum of the activation of the neurons of the previous layer, plus a bias. In other words, it is the activation of a neuron that has not yet been processed through the sigmoid function. This weighted sum is represented as \(z_j^{(L)}\) to differentiate it from the activation of a neuron (represented as \(a_j^{(L)}\)). This equation is presented here separately from the activation function because it will be used to compute the cost function's gradient.
 \begin{displaymath}
 	z_j^{(L)} = w_{j0}^{(L)}a_0^{(L-1)} + w_{j1}^{(L)}a_1^{(L-1)} + \cdots + w_{jk}^{(L)}a_k^{(L-1)} + b_j^{(L)}
 \end{displaymath}
 
-Thus, the activation for a neuron in the neural network can be represented as:
+Therefore, the activation for a neuron in the neural network can be represented as:
 \begin{displaymath}
 	a_j^{(L)} = \sigma\left(z_j^{(L)}\right)
 \end{displaymath}
 
-The derivative of the cost function over the derivative of a specific weight is necessary for this computation. It is represented in the equation below. Not all connections in the network have an equal impact on the error cost ; this equation tells us how much a specific weight or bias in the neural network impacts the error cost.
+With these two equations established, it is now possible to compute how sensitive the cost function is to a change in a weight or bias. This can be computed with the derivative of the cost function over the derivative of a weight, with the help of the chain rule. The equation is represented below.
 \begin{displaymath}
-	\frac{\delta C_0}{\delta w_{jk}^{(L)}} = a^{(L-1)} \sigma\prime(x^{(L)})((a^{(L)})^2)\prime
+	\frac{\delta C_0}{\delta w_{jk}^{(L)}} =
+	\frac{\delta z_j^{(L)}}{\delta w_{jk}^{(L)}}
+	\frac{\delta a_j^{(L)}}{\delta z_j^{(L)}}
+	\frac{\delta C_0}{\delta a_j^{(L)}}
+	= a^{(L-1)} \sigma\prime(x^{(L)})((a^{(L)})^2)\prime
 \end{displaymath}
 
-Below: derivative of cost function in relation to a specific activation. Tells how sensitive cost is to a specific activation in the previous layer (L-1). Neuron influences cost through multiple different "paths" which is why we sum those influences together.
+Sensitivity of the cost function to a specific activation \(\frac{\delta C_0}{\delta a_j^{(L)}}\)
 \begin{displaymath}
 	\frac{\delta C_0}{\delta a_{k}^{(L-1)}} = 
 	\sum_{j=0}^{n_{L-1}}
 	\frac{\delta z_j^{(L)}}{\delta a_{k}^{(L-1)}}
-	\frac{\delta a_j^{(L)}}{\delta z_j^{(L)}}
-	\frac{\delta C_0}{\delta a_j^{(L)}}
-\end{displaymath}
-
-Therefore, by using the chain rule, it is possible to compute the derivative of the cost function in relation to a specific weight. This equation tells us how much an adjustment to this weight will impact the error cost.
-\begin{displaymath}
-	\frac{\delta C_0}{\delta w_{jk}^{(L)}} = 
-	\frac{\delta z_j^{(L)}}{\delta w_{jk}^{(L)}}
 	\frac{\delta a_j^{(L)}}{\delta z_j^{(L)}}
 	\frac{\delta C_0}{\delta a_j^{(L)}}
 \end{displaymath}
