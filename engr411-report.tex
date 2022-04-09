@@ -135,6 +135,7 @@ With these two equations established, it is now possible to compute how sensitiv
 	= a^{(L-1)} \sigma\prime(x^{(L)})((a^{(L)})^2)\prime
 \end{displaymath}
 
+The formula above uses the derivative of the cost function over an activation. It describes how sensitive the cost function is to a change in a given activation. This is helpful to keep track of ; it cannot be modified directly, but it is a result of changes to the weights and biases. To compute this derivative for neurons of the output layer, we use the output activations and the expected activations. For neurons in the previous layers, we need to use the derivative of the cost over the activation of previous layers (this is where "backpropagation" comes from).
 Sensitivity of the cost function to a specific activation \(\frac{\delta C_0}{\delta a_j^{(L)}}\)
 \begin{displaymath}
 	\frac{\delta C_0}{\delta a_{k}^{(L-1)}} = 
@@ -144,10 +145,10 @@ Sensitivity of the cost function to a specific activation \(\frac{\delta C_0}{\d
 	\frac{\delta C_0}{\delta a_j^{(L)}}
 \end{displaymath}
 
-The result is the gradient descent vector. Each component of this vector represents the adjustments that should be made to the different weights and biases in the neural network to minimize the cost function.
+The gradient descent vector is obtained by computing the derivative of the cost function over each weight and bias. Each component of this vector represents the adjustments that should be made to the different weights and biases in the neural network to minimize the cost function \cite{sanderson_backpropagation_2017}.
 \begin{displaymath}
 	-\nabla C =
-	-1 \begin{bmatrix}
+	-\begin{bmatrix}
 		\frac{\delta C_0}{\delta w_{0,0}^{(1)}}\\
 		\frac{\delta C_0}{\delta w_{0,1}^{(1)}}\\
 		\vdots\\
@@ -207,20 +208,20 @@ An issue arises when the kernel is applied to pixels close to the edges. As each
 \end{figure}
 
 \subsection{Convolutional layers}\label{cnn-section}
-The convolutional layers apply image convolutions with different kernels to the input images in order to extract additional information from them. The objective of the convolution operation is to extract high-level features from the input image, such as edges or corners. If multiple convolutional layers are used, conventionaly, the additional layers will be responsible for detecting higher-level features, such as shapes or patterns. With enough layers, a convolutional neural network can acquire some very deep insight into the subject of the image \cite{saha_comprehensive_2018}.
+The convolutional layers apply image convolutions with different kernels to the input images in order to extract additional information from them. The objective of the convolution operation is to extract high-level features from the input image, such as edges or corners. If multiple convolutional layers are used, conventionaly, the additional layers will be responsible for detecting lower-level features, such as shapes or patterns. With enough layers, a convolutional neural network can acquire some very deep insight into the subject of an image \cite{saha_comprehensive_2018}.
 
-[À adapter] In the case of images with multiple channels (e.g. RGB), the Kernel has the same depth as that of the input image. Matrix Multiplication is performed between Kn and In stack ([K1, I1]; [K2, I2]; [K3, I3]) and all the results are summed with the bias to give us a squashed one-depth channel Convoluted Feature Output.
-
-The kernels used in the convolutional layers can be specified by hand. However, they can also be learned using the technique described in section \ref{deep-learning}, which is a strength of convolutional neural networks \cite{brownlee_gentle_2019}.
+The kernels used in the convolutional layers can be specified by the programmer. However, they can also be learned with backpropagation, as described in section \ref{deep-learning}, which is a strength of convolutional neural networks \cite{brownlee_gentle_2019}.
 
 \subsection{Pooling layers}
 The convolutional layers are very effective at highlighting features within an image, but they also have the downside of recording their precise location within the image frame. Therefore, transformations to the image, such as cropping, rotating or shifting will alter the feature map \cite{brownlee_gentle_2019}.
 
-The most common approach to this problem is downsampling. Downsampling reduces the dimensions and resolution of the image. This results in a less detailed feature map, that preserves the large, important details, while foregoing the minor, less useful ones. This also diminishes the impact that the position, rotation or scale of an object has on the neural network's output. One technique to downsampling is to change the stride of the image convolution. This simply means that when a kernel is convoluted over an image, instead of applying the kernel to every pixel, the kernel is only applied to every \(n^{th}\) pixel. This technique can work, but a more robust approach is to use a pooling layer.
+The most common solution to this problem is downsampling. Downsampling reduces the dimensions and resolution of an image. This results in a less detailed feature map, that preserves the large, important details, while foregoing the minor, less useful ones. This also diminishes the impact that the position, rotation or scale of an object has on the neural network's output.
 
-A pooling operation is applied to every feature map produced by the convolution layers. For every group of n * n pixels in an image, a math operation is applied to create a single value. The size of the pooling operation is almost always 2*2, which means that every image dimension will be reduced by half, and the number of pixels will be reduced by a factor of four \cite{brownlee_gentle_2019}.
+One technique to downsampling is to change the stride of the image convolution. This simply means that when a kernel is convoluted over an image, instead of applying the kernel to every pixel, the kernel is only applied to every \(n^{th}\) pixel.
 
-There are two common pooling algorithms: \textbf{max pooling} and \textbf{average pooling}. Max pooling returns the maximum value from each kernel of n * n pixels. Average pooling returns the average of the \(n^2\) pixels' values within a kernel. Max pooling is generally preferred because, in addition to reducing the image's dimension, it also discards unusual, noisy activations from the data, whereas average pooling does not discard noise \cite{saha_comprehensive_2018}.
+A more robust approach is to use a pooling layer. A pooling operation is applied to every feature map produced by the convolution layers. For every group of n * n pixels in an image, a function is applied to reduce the pixel group to a single value. The size of the pooling operation is most often 2 * 2, which means that every image dimension will be reduced by half, and the number of pixels will be reduced by a factor of four \cite{brownlee_gentle_2019}.
+
+There are two common pooling algorithms: \textbf{max pooling} and \textbf{average pooling}. Max pooling returns the maximum value from each group of \(n^2\) pixels. Average pooling returns the average of the \(n^2\) pixels' values. Max pooling is generally preferred because, in addition to reducing the image's dimension, it also discards unusual, noisy activations from the data, whereas average pooling does not discard noise \cite{saha_comprehensive_2018}.
 
 Unlike convolutional layers, pooling layers are not machine-learned. They are always specified by the programmmer \cite{brownlee_gentle_2019}.
 
@@ -232,18 +233,18 @@ Unlike convolutional layers, pooling layers are not machine-learned. They are al
 \end{figure}
 
 \subsection{Image classification}
-After processing the image through the convolutional and pooling layers, the remaining data is flattened into an array of numbers. This array is fed into a multilayer perceptron, as discussed in section \ref{fully-connected-networks}. The classification is done via the soft-max classification algorithm, which is the technique described previously of the neural network giving its best "guess" of the image's subject through the activation of the output layer's neurons \cite{rosebrock_softmax_2016}.
+After processing the image through the convolutional and pooling layers, the remaining data is flattened into an array of numbers. This array is fed into a regular multilayer perceptron (fully-connected layers), as discussed in section \ref{fully-connected-networks}. The classification is done via the soft-max classification algorithm, which is the technique described previously of the neural network returning its best "guess" of the image's subject by the activation of the output layer's neurons \cite{rosebrock_softmax_2016}.
 
 \section{Favorable characteristics of CNNs for image classification}
-Convolutional neural networks are one amongst many forms and structures of artificial intelligence and machine learning. They are frequently used to analyze visual imagery because they have several favorable characteristics that make them suitable for this purpose.
+Convolutional neural networks are one amongst many forms and structures of artificial intelligence and machine learning. They are frequently used to analyze visual imagery because they have several favorable characteristics over other classes of artificial intelligence that make them suitable for this purpose.
 
-First, the use of convolutional layers preserves the spatial data within the image. This is useful because in an image, a pixel should be analyzed in relation to a few of its neighboring pixels. These relationships would be lost if the pixel data was immediately flattened, and the neural network would be needlessly heavy if every pixel was analyzed in relation to every other pixel in the image. Therefore, the convolutional and pooling layers reduce the images to a form that is easier to analyze without losing features that are critical for a good understanding of the image \cite{saha_comprehensive_2018}.
+The use of convolutional layers preserves the spatial data within the image. This is useful because in an image, a pixel should be analyzed only in relation to a few of its neighboring pixels. These geometric relationships would be lost if the pixel data was flattened from the start. Furethermore, the neural network would be needlessly heavy if every pixel was analyzed in relation to every other pixel in the image. Therefore, the convolutional and pooling layers reduce the images to a form that is easier to analyze without losing features that are critical for a good understanding of the image \cite{saha_comprehensive_2018}.
 
-Furthermore, since every pixel is analysed only in relation to a few of its neighboring pixels (within the range of a kernel), the first layers of a CNN do not need to be fully connected. This is much lighter than a fully connected neural network, which improves performance. [SOURCE]
+Since every pixel is analysed only in relation to a few of its neighboring pixels (within the range of a kernel), the first layers of a CNN do not need to be fully connected. This is much lighter than a fully connected neural network, which improves performance. \cite{aghdam_guide_2017}
 
-The use of multiple kernels in the convolutional layers improves the image analysis by enabling the detection of a large variety of details. Large scale details such as edges or corners, and lower-scale details such as loops, can all be detected and fed into the algorithm to improve the accuracy of the image classification [SOURCE].
+The use of multiple kernels in the convolutional layers improves the image analysis by enabling the detection of a large variety of details. Large scale details such as edges or corners, and lower-scale details such as loops, can all be detected and fed into the algorithm to improve the accuracy of the image classification \cite{saha_comprehensive_2018}.
 
-Finally, although the use of CNNs was only discussed in the context of image classification in this paper, the possibilities of CNNs go way beyond that. CNNs can detect multiple different objects within an image and identify their bounds to pixel precision, which could be very useful in photo editing for example [SOURCE].
+Finally, although the use of CNNs was only discussed in the context of image classification in this paper, the possibilities of CNNs go way beyond that. CNNs can detect multiple different objects within an image and identify their bounds to pixel precision, which could be very useful in photo editing for example \cite{brownlee_gentle_2019}.
 
 \section{Conclusion}
 Convolutional neural networks are a class of neural networks commonly used to analyze digital imagery. They are made up of layers of "neurons" that are connected together through weighted connections, that can be straightened or weakened in order for the network to accurately identify an image's subject. Neural networks are adjusted through deep learning, a process of tweaking the strength of connections between neurons by processing a training set and adjusting connections to improve the accuracy of the network over said training set. CNNs also include convolutional layers, that aid in the detection of image features, and pooling layers, to remove variance and improve performance. This report discussed the use of CNNs in the context of image analysis, but more advanced applications, such as object identification, are also possible.
